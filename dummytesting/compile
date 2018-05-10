@@ -1,0 +1,1 @@
+gcc testing.c -lncurses -o test
