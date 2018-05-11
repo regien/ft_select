@@ -10,7 +10,6 @@
 #include <unistd.h>
 #include <term.h>
 
-/*
 int		vaina(void)
 {
 	char			buffer[3];
@@ -30,10 +29,10 @@ int		vaina(void)
 			return (0);
 		}
 	}
+	return (0);
 }
-*/
 
-int	putpendejada(int c)
+int		putpendejada(int c)
 {
 	printf("%c", c);
 	return (1);
@@ -48,15 +47,26 @@ int		main(void)
 		return (-1);
 	if (tgetent(NULL, name_term) == ERR)
 		return (-1);
+	// wait, these configuration is gonna make your terminal
+	// go crazy
+	term.c_lflag &= ~(ICANON);
+	term.c_lflag &= ~(ECHO);
+	term.c_cc[VMIN] = 1;
+	term.c_cc[VTIME] = 0;
+	if (tcsetattr(0, TCSADRAIN, &term) == -1)
+		exit(-1);
+
 	if (tcgetattr(0, &term) == -1)
 		return (-1);
 
 //	vaina();
+	/*
 	char			*res;
 
 	if (!(res = tgetstr("cl", NULL)))
 		return (-1);
 	tputs(res, 0, putpendejada);
+	*/
 	return (0);
 }
 
