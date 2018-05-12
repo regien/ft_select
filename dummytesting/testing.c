@@ -45,9 +45,14 @@ void	back_normal(struct termios term)
 	// basically ICANON get back to normal the terminal and |
 	// ECHO makes writing available again
 	term.c_lflag = (ICANON | ECHO);
+	write(2, tgetstr("ve", NULL), strlen(tgetstr("ve", NULL)));
 	if (tcsetattr(0, 0, &term) == -1)
 		return ;
 }
+
+/*
+** Setting up terminal stuff
+*/
 
 int		main(void)
 {
@@ -70,7 +75,7 @@ int		main(void)
 	// extra setup ti - vi | begin program that uses cursor motio
 	// - cursor invisible
 	write(2, tgetstr("ti", NULL), strlen(tgetstr("ti", NULL)));
-	write(2, tgetstr("vi", NULL), strlen(tgetstr("ti", NULL)));
+	write(2, tgetstr("vi", NULL), strlen(tgetstr("vi", NULL)));
 
 	if (tcgetattr(0, &term) == -1)
 		return (-1);
