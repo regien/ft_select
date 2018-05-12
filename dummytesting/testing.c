@@ -38,6 +38,17 @@ int		putpendejada(int c)
 	return (1);
 }
 
+void	back_normal(struct termios term)
+{
+	if (tcgetattr(0, &term) == -1)
+		return ;
+	// basically ICANON get back to normal the terminal and |
+	// ECHO makes writing available again
+	term.c_lflag = (ICANON | ECHO);
+	if (tcsetattr(0, 0, &term) == -1)
+		return ;
+}
+
 int		main(void)
 {
 	char			*name_term;
@@ -49,12 +60,17 @@ int		main(void)
 		return (-1);
 	// wait, these configuration is gonna make your terminal
 	// go crazy
+	tcgetattr(0, &term);
 	term.c_lflag &= ~(ICANON);
 	term.c_lflag &= ~(ECHO);
 	term.c_cc[VMIN] = 1;
 	term.c_cc[VTIME] = 0;
 	if (tcsetattr(0, TCSADRAIN, &term) == -1)
 		exit(-1);
+	// extra setup ti - vi | begin program that uses cursor motio
+	// - cursor invisible
+	write(2, tgetstr("ti", NULL), strlen(tgetstr("ti", NULL)));
+	write(2, tgetstr("vi", NULL), strlen(tgetstr("ti", NULL)));
 
 	if (tcgetattr(0, &term) == -1)
 		return (-1);
@@ -67,6 +83,8 @@ int		main(void)
 		return (-1);
 	tputs(res, 0, putpendejada);
 	*/
+
+	back_normal(term);
 	return (0);
 }
 
