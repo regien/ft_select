@@ -88,7 +88,7 @@ int		main(void)
 		return (-1);
 	tputs(res, 0, putpendejada);
 	*/
-
+//	vaina();
 	back_normal(term);
 	return (0);
 }

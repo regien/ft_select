@@ -3,93 +3,48 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gmalpart <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: regien <gmalpart@student.42.us.org>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2018/01/24 21:34:06 by gmalpart          #+#    #+#              #
-#    Updated: 2018/03/26 13:59:21 by gmalpart         ###   ########.fr        #
+#    Created: 2018/05/16 04:24:39 by regien            #+#    #+#              #
+#    Updated: 2018/05/16 11:45:03 by regien           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
-LIB = libft/
-CFLAGS = -Wall -Wextra -Werror
+NAME = ft_select
+DUMMY = test
+MAKE = make -C 
+LIBFT = libft/libft.a
+CURSES = -l ncurses
+# LIBPRINTF = ft_printf/libft
+FLAGSC = -Wall -Wextra -Werror
+HEADERS = -I includes -I libft/includes
 CC = gcc
-HEADER = libft/includes
-FLAGSHEAD = -I libft/includes -I includes/
 
-# Only using a few libft functions
+FILES = main.c
 
-FTFILES = ft_memalloc.c \
-		  ft_putnbr.c \
-		  ft_putchar.c \
-		  ft_putstr.c \
-		  ft_strlen.c
+SRCFIL = $(addprefix src/, $(FILES))
 
-LIBFTFILES = $(addprefix libft/, $(FTFILES))
-
-# MAIN WORK files of the project
-
-FILES = parser.c \
-		f_conversions.c \
-		parse_intfloat.c \
-		parser_strings.c \
-		f_align.c \
-		f_leftalign.c \
-		f_space.c \
-		f_zero.c \
-		f_zero_debug.c \
-		printf.c 
-
-SRCFILES = $(addprefix src/, $(FILES))
-
-# CONVERSIONS / MULTICASTING files
-
-CONVERSIONS =	h_conversions.c \
-				hh_conversions.c \
-				j_conversions.c \
-				l_conversions.c \
-				ll_conversions.c \
-				z_conversions.c 
-
-SRCCONVERS = $(addprefix src/conversions/, $(CONVERSIONS))
-
-# FUNCTIONS JUST FOR PRINTING
-
-HELPERS =	j_numbers.c \
-			help_intfloat.c \
-			help_strings.c \
-			help_widechar.c \
-			ll_helpers.c \
-			hh_helpers.c \
-
-SRCHELP = $(addprefix src/helpers/, $(HELPERS))
-
-# Global call to all .c files
-
-GENFILES = $(LIBFTFILES) $(SRCFILES) $(SRCCONVERS) $(SRCHELP)
-
-# Objects transform
-
-REGFILES = $(FTFILES) $(FILES) $(CONVERSIONS) $(HELPERS)
-GENOBJECTS = $(REGFILES:.c=.o)
 
 all: $(NAME)
 
-$(NAME):
-	gcc $(CFLAGS) -c $(FLAGSHEAD) $(GENFILES)
-	ar rc $(NAME) $(GENOBJECTS)
-	ranlib $(NAME)
 
-norm:
-	norminette $(GENFILES) includes/ft_printf.h
+# REMEMBER TO INCLUDES THE FLAGSC in the final version
+$(NAME):
+	$(MAKE) libft 
+	gcc $(HEADERS) $(CURSES) $(LIBFT) $(SRCFIL) -o $(NAME)
+	
 
 comp:
-	gcc $(FLAGSHEAD) $(GENFILES) -o test
+	gcc $(HEADERS) $(CURSES) $(SRCFIL) $(LIBFT) -o $(DUMMY)
 
 clean:
-	rm -rf $(GENOBJECTS)
+	$(MAKE) libft clean
+	
 
-fclean: clean
-	rm -rf $(NAME)
+fclean:
+	$(MAKE) libft fclean
+	rm $(NAME)
 
 re: fclean all
+
+.PHONY: all, clean, fclean, re

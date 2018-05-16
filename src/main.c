@@ -6,7 +6,7 @@
 /*   By: regien <gmalpart@student.42.us.org>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/13 18:50:14 by regien            #+#    #+#             */
-/*   Updated: 2018/05/14 01:14:13 by regien           ###   ########.fr       */
+/*   Updated: 2018/05/16 11:46:06 by regien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		 setting_up(char **av, t_total *total)
 {
 	if (!(total = ft_memalloc(sizeof(t_total))))
 		return (-1);
-	if ()
+//	if ()
 
 	return (0);
 }

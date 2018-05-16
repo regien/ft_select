@@ -6,7 +6,7 @@
 /*   By: gmalpart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/12 03:51:31 by gmalpart          #+#    #+#             */
-/*   Updated: 2018/05/14 00:33:51 by regien           ###   ########.fr       */
+/*   Updated: 2018/05/16 11:46:20 by regien           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <sys/ioctl.h>
+# include "libft.h"
 
 
 # include <curses.h>
@@ -32,7 +33,7 @@ typedef struct	s_total
 //	char		*
 	char		*width;
 	char		*name_term;
-	struct		term;
+//	struct		term;
 }				t_total;
 
 
