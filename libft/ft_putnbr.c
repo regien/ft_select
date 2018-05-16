@@ -1,39 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_select.h                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gmalpart <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/12 03:51:31 by gmalpart          #+#    #+#             */
-/*   Updated: 2018/05/14 00:33:51 by regien           ###   ########.fr       */
+/*   Created: 2017/07/13 19:39:41 by gmalpart          #+#    #+#             */
+/*   Updated: 2017/10/21 06:56:19 by gmalpart         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_SELECT_H
-# define FT_SELECT_H
+#include "libft.h"
 
-# include <termcap.h>
-# include <stdio.h>
-# include <string.h>
-# include <stdlib.h>
-# include <sys/ioctl.h>
-
-
-# include <curses.h>
-//# include <termios.h>
-# include <unistd.h>
-# include <term.h>
-# include <signal.h>
-
-
-typedef struct	s_total
+void	ft_putnbr(int n)
 {
-//	char		*
-	char		*width;
-	char		*name_term;
-	struct		term;
-}				t_total;
+	char	c;
 
-
-#endif
+	if (n == -2147483648)
+		return (ft_putstr("-2147483648"));
+	if (n < 0)
+	{
+		n = -n;
+		ft_putchar('-');
+	}
+	if (n < 10)
+	{
+		c = n + '0';
+		ft_putchar(c);
+	}
+	else
+	{
+		ft_putnbr(n / 10);
+		ft_putnbr(n % 10);
+	}
+}
